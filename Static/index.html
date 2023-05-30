@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;500;700&display=swap"
+            rel="stylesheet" />
+        <title>Blog Subcription</title>
+        <style>
+            .container {
+                background-color: rgba(127, 255, 212, 0.327);
+                
+            }
+        </style>
+    </head>
+    <body class="m-[0] p-[0] bg-[#2e424d] text-[#eaebedee]">
+        <div class="flex justify-evenly items-center my-[24px]">
+            <div><img src="./main-logo.svg" alt="" /></div>
+            <h1 class="text-[36px] font-[source code]">Ahmad's Blog</h1>
+        </div>
+        <div
+            class="container mt-[96px] mx-[auto] w-[fit-content] p-[8px] rounded-[5px] flex flex-col gap-[48px]">
+            <p class="text-[24px]">
+                Join our community and stay in the loop <br />
+                subscribe today for updates and exclusive content
+            </p>
+            <form action="/" class="bg-[#fff] flex w-[fit-content]">
+                <input
+                    type="email"
+                    name="email"
+                    id="userEmail"
+                    class="w-[400px] border-2 text-[22px] py-[2px] px-[4px] outline-[0] text-[#2e424d]"
+                    placeholder="Your Email..." />
+                <button
+                    type="submit"
+                    class="text-center w-[15%] bg-[#98dad9] text-[22px] text-[#2e424d] p-[4px]">
+                    Join
+                </button>
+            </form>
+        </div>
+        <script>
+            function getEmail() {
+                let userEmail = document.querySelector("#userEmail").value;
+                return JSON.stringify({ email: userEmail });
+            }
+            document
+                .querySelector("form")
+                .addEventListener("submit", function (event) {
+                    event.preventDefault();
+
+                    fetch("http://localhost:8080/send-email", {
+                        // Adding method type
+                        method: "POST",
+
+                        // Adding body or contents to send
+                        body: getEmail(),
+
+                        // Adding headers to the request
+                        headers: {
+                            "Content-type": "application/json; charset=UTF-8",
+                        },
+                    })
+                        .then((response) => {
+                            if (response.ok) {
+                                console.log("Email sent successfully!");
+                            } else {
+                                console.error("Failed to send email.");
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("An error occurred:", error);
+                        });
+                });
+        </script>
+    </body>
+</html>
